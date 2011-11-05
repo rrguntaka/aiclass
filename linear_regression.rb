@@ -1,17 +1,15 @@
 class LinearRegression
   def sum(arr)
-    sum = 0.0
-    arr.each{|e| sum += e}
-    sum
+    arr.reduce(0.0) {|a,x| a+x}
   end
 
   def sqrSum(arr)
-    sum(arr.map{|e| e*e})
+    arr.reduce(0.0) {|a,x| a + (x*x)}
   end
 
   def initialize(x,y)
     @x = x; @y = y
-    @sumX = sum(x); @sumY = sum(y)
+    @sumX = sum(x); @sumY = sum(y); @avg = @sumY/@y.size
     @sumXX = sum(x.map{|e| e*e})
     @sumXY = sum((x.zip y).map{|a,b| a*b})
     @w1 = getW1; @w0 = getW0
@@ -26,15 +24,17 @@ class LinearRegression
   end
 
   def getEq
-    "#{@w1}x +  #{@w0}"
+    "#{@w1}x #{@w0 > 0 ? '+' : '-'}  #{@w0.abs}"
   end
 
   def stats
-    numerator = sqrSum((@x.zip @y).map{|a,b|(@w1*a + @w0 - (@sumY/@y.size))})
-    denominator = sqrSum((@x.zip @y).map{|a,b|(b - (@sumY/@y.size))})
-    rss = (numerator - denominator).abs
-    r = Math.sqrt (numerator / denominator)
-    {:rss => rss, :r => r, :tss => denominator}
+    y1m = -> x {@w1*x + @w0 - @avg}
+    y0m = -> y {y - @avg}
+    n = sqrSum(@x.map &y1m)
+    d = sqrSum(@y.map &y0m)
+    rss = (n - d).abs
+    r = Math.sqrt (n / d)
+    {:rss => rss, :r => r, :tss => d}
   end
 end
 
