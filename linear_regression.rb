@@ -16,7 +16,7 @@ class LinearRegression
   end
 
   def getW1
-    (@x.size * @sumXY - @sumX * @sumY) /(@x.size * @sumXX - @sumX * @sumX)
+    (@x.size * @sumXY - @sumX * @sumY) / (@x.size * @sumXX - @sumX * @sumX)
   end
 
   def getW0
