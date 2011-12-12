@@ -48,3 +48,6 @@ b = LinearRegression.new(
  [52.21, 	53.12, 	54.48, 	55.84, 	57.20, 	58.57, 	59.93, 	61.29, 	63.11, 	64.47, 	66.28, 	68.10, 	69.92, 	72.19, 	74.46]
 )
 puts b.getEq, b.stats
+
+c = LinearRegression.new([1,3,4,5,9],[20,52,68,84,148])
+puts c.getEq, c.stats

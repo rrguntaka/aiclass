@@ -88,4 +88,13 @@ if $0==__FILE__
   puts c.prob("today", :ham)
   
   p c.classify("today is secret")
+  
+  training = {
+	:old=>["Top Gun","Shy People","Top Hat"],
+	:new=>["Top Gear","Gun Shy"]
+  }
+  c = NaiveBayes::Classifier.new(training)
+  p c
+  puts c.prob("Top",:old)
+  p c.classify("Top")
 end
